@@ -24,66 +24,66 @@ namespace Infra
                 }
             };
 
-            var lambdaFunctionOne = new Function(this, "my-funcOne", new FunctionProps
-            {
-                Runtime = Runtime.DOTNET_6,
-                MemorySize = 1024,
-                LogRetention = RetentionDays.ONE_DAY,
-                Handler = "FunctionOne",
-                Code = Code.FromAsset("../apps/src/FunctionOne/", new Amazon.CDK.AWS.S3.Assets.AssetOptions
-                {
-                    Bundling = buildOption
-                }),
-            });
+            //var lambdaFunctionOne = new Function(this, "my-funcOne", new FunctionProps
+            //{
+            //    Runtime = Runtime.DOTNET_6,
+            //    MemorySize = 1024,
+            //    LogRetention = RetentionDays.ONE_DAY,
+            //    Handler = "FunctionOne",
+            //    Code = Code.FromAsset("../apps/src/FunctionOne/", new Amazon.CDK.AWS.S3.Assets.AssetOptions
+            //    {
+            //        Bundling = buildOption
+            //    }),
+            //});
 
-            var lambdaFunctionTwo = new Function(this, "my-funcTwo", new FunctionProps
-            {
-                Runtime = Runtime.DOTNET_6,
-                MemorySize = 1024,
-                LogRetention = RetentionDays.ONE_DAY,
-                Handler = "FunctionTwo",
-                Code = Code.FromAsset("../apps/src/FunctionTwo/", new Amazon.CDK.AWS.S3.Assets.AssetOptions
-                {
-                    Bundling = buildOption
-                }),
-            });
+            //var lambdaFunctionTwo = new Function(this, "my-funcTwo", new FunctionProps
+            //{
+            //    Runtime = Runtime.DOTNET_6,
+            //    MemorySize = 1024,
+            //    LogRetention = RetentionDays.ONE_DAY,
+            //    Handler = "FunctionTwo",
+            //    Code = Code.FromAsset("../apps/src/FunctionTwo/", new Amazon.CDK.AWS.S3.Assets.AssetOptions
+            //    {
+            //        Bundling = buildOption
+            //    }),
+            //});
 
-            var lambdaFunctionThree = new Function(this, "my-funcThree", new FunctionProps
-            {
-                Runtime = Runtime.DOTNET_6,
-                MemorySize = 1024,
-                LogRetention = RetentionDays.ONE_DAY,
-                Handler = "FunctionThree",
-                Code = Code.FromAsset("../apps/src/FunctionThree/", new Amazon.CDK.AWS.S3.Assets.AssetOptions
-                {
-                    Bundling = buildOption
-                }),
-            });
+            //var lambdaFunctionThree = new Function(this, "my-funcThree", new FunctionProps
+            //{
+            //    Runtime = Runtime.DOTNET_6,
+            //    MemorySize = 1024,
+            //    LogRetention = RetentionDays.ONE_DAY,
+            //    Handler = "FunctionThree",
+            //    Code = Code.FromAsset("../apps/src/FunctionThree/", new Amazon.CDK.AWS.S3.Assets.AssetOptions
+            //    {
+            //        Bundling = buildOption
+            //    }),
+            //});
 
-            //Proxy all request from the root path "/" to Lambda Function One
-            var restAPI = new LambdaRestApi(this, "Endpoint", new LambdaRestApiProps
-            {
-                Handler = lambdaFunctionOne,
-                Proxy = true,
-            });
+            ////Proxy all request from the root path "/" to Lambda Function One
+            //var restAPI = new LambdaRestApi(this, "Endpoint", new LambdaRestApiProps
+            //{
+            //    Handler = lambdaFunctionOne,
+            //    Proxy = true,
+            //});
 
-            //Proxy all request from path "/functiontwo" to Lambda Function Two
-            var apiFunctionTwo = restAPI.Root.AddResource("functiontwo", new ResourceOptions
-            {
-                DefaultIntegration = new LambdaIntegration(lambdaFunctionTwo)
-            });
-            apiFunctionTwo.AddMethod("ANY");
-            apiFunctionTwo.AddProxy();
+            ////Proxy all request from path "/functiontwo" to Lambda Function Two
+            //var apiFunctionTwo = restAPI.Root.AddResource("functiontwo", new ResourceOptions
+            //{
+            //    DefaultIntegration = new LambdaIntegration(lambdaFunctionTwo)
+            //});
+            //apiFunctionTwo.AddMethod("ANY");
+            //apiFunctionTwo.AddProxy();
 
-            //Proxy all request from path "/functionthree" to Lambda Function Three
-            var apiFunctionThree = restAPI.Root.AddResource("functionthree", new ResourceOptions
-            {
-                DefaultIntegration = new LambdaIntegration(lambdaFunctionThree)
-            });
-            apiFunctionThree.AddMethod("ANY");
-            apiFunctionThree.AddProxy();
+            ////Proxy all request from path "/functionthree" to Lambda Function Three
+            //var apiFunctionThree = restAPI.Root.AddResource("functionthree", new ResourceOptions
+            //{
+            //    DefaultIntegration = new LambdaIntegration(lambdaFunctionThree)
+            //});
+            //apiFunctionThree.AddMethod("ANY");
+            //apiFunctionThree.AddProxy();
 
-            new CfnOutput(this, "apigwtarn", new CfnOutputProps { Value = restAPI.ArnForExecuteApi() });
+            //new CfnOutput(this, "apigwtarn", new CfnOutputProps { Value = restAPI.ArnForExecuteApi() });
         }
     }
 }
